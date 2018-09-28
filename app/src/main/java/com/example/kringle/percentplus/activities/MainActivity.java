@@ -1,5 +1,6 @@
 package com.example.kringle.percentplus.activities;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
@@ -30,7 +31,6 @@ public class MainActivity extends FragmentActivity {
     ConstraintLayout preloader_view;
     private PagerAdapter pagerAdapter;
     private int tabPosition = 0;
-    private Bundle extras;
     private String objectName;
     private Bundle objectNameBundle;
 
@@ -40,11 +40,13 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        extras = getIntent().getExtras();
+        Intent intent = new Intent(MainActivity.this, AuthActivity.class);
+        startActivity(intent);
 
-        if (extras != null) {
-            tabPosition = extras.getInt("tab_id");
-            objectName = extras.getString("object_name");
+
+        if (getIntent().getIntExtra("tab_id", -1) != -1) {
+            tabPosition = getIntent().getExtras().getInt("tab_id");
+            objectName = getIntent().getStringExtra("object_name");
 
             objectNameBundle = new Bundle();
             objectNameBundle.putString("object_name", objectName);
@@ -63,7 +65,8 @@ public class MainActivity extends FragmentActivity {
         pagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), objectNameBundle);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(pagerAdapter);
-        if (extras != null) viewPager.setCurrentItem(tabPosition);
+        if (getIntent().getIntExtra("tab_id", -1) != -1)
+            viewPager.setCurrentItem(tabPosition);
         setTabIcons();
     }
 
