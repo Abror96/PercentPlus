@@ -8,9 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.kringle.percentplus.ObjectsActivity;
+import com.example.kringle.percentplus.activities.ObjectsActivity;
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.model.Category;
 

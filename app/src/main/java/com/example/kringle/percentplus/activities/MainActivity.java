@@ -1,4 +1,4 @@
-package com.example.kringle.percentplus;
+package com.example.kringle.percentplus.activities;
 
 import android.graphics.PorterDuff;
 import android.support.constraint.ConstraintLayout;
@@ -9,7 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.adapter.CustomPagerAdapter;
 import com.example.kringle.percentplus.fragments.BonusFragment;
 import com.example.kringle.percentplus.fragments.CategoryFragment;
@@ -27,6 +29,10 @@ public class MainActivity extends FragmentActivity {
     @BindView(R.id.preloader)
     ConstraintLayout preloader_view;
     private PagerAdapter pagerAdapter;
+    private int tabPosition = 0;
+    private Bundle extras;
+    private String objectName;
+    private Bundle objectNameBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +40,30 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        preloader();
+        extras = getIntent().getExtras();
+
+        if (extras != null) {
+            tabPosition = extras.getInt("tab_id");
+            objectName = extras.getString("object_name");
+
+            objectNameBundle = new Bundle();
+            objectNameBundle.putString("object_name", objectName);
+
+            preloader_view.setVisibility(View.GONE);
+            tabLayout.setVisibility(View.VISIBLE);
+
+            initViewPager();
+        } else {
+            preloader();
+        }
 
     }
 
     private void initViewPager() {
-        pagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), objectNameBundle);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(pagerAdapter);
+        if (extras != null) viewPager.setCurrentItem(tabPosition);
         setTabIcons();
     }
 

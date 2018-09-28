@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.kringle.percentplus.activities.MainActivity;
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.model.Object;
 
@@ -34,13 +35,16 @@ public class ObjectsAdapter extends RecyclerView.Adapter<ObjectsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Object object = objectList.get(position);
+        final Object object = objectList.get(position);
         holder.objectName.setText(object.getObjectName());
 
         holder.objectsItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(view.getContext(), )
+                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                intent.putExtra("tab_id", 2);
+                intent.putExtra("object_name", object.getObjectName());
+                view.getContext().startActivity(intent);
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.example.kringle.percentplus.adapter;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,9 +12,11 @@ import com.example.kringle.percentplus.fragments.SearchFragment;
 
 public class CustomPagerAdapter extends FragmentPagerAdapter {
 
+    private Bundle data;
 
-    public CustomPagerAdapter(FragmentManager fm) {
+    public CustomPagerAdapter(FragmentManager fm, Bundle data) {
         super(fm);
+        this.data = data;
     }
 
     @Override
@@ -21,7 +24,10 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0: return new SearchFragment();
             case 1: return new CategoryFragment();
-            case 2: return new BonusFragment();
+            case 2:
+                final BonusFragment bonusFragment = new BonusFragment();
+                bonusFragment.setArguments(this.data);
+                return bonusFragment;
         }
         return null;
     }

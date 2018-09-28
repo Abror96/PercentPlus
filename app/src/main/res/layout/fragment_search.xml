@@ -33,7 +33,7 @@
                 android:layout_marginBottom="30dp"
                 android:fontFamily="@font/new_font"
                 android:text="ПОИСК"
-                android:textColor="#b6ffffff"
+                android:textColor="#fff"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
