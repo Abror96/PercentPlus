@@ -40,10 +40,6 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        Intent intent = new Intent(MainActivity.this, AuthActivity.class);
-        startActivity(intent);
-
-
         if (getIntent().getIntExtra("tab_id", -1) != -1) {
             tabPosition = getIntent().getExtras().getInt("tab_id");
             objectName = getIntent().getStringExtra("object_name");
@@ -57,6 +53,15 @@ public class MainActivity extends FragmentActivity {
             initViewPager();
         } else {
             preloader();
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+
+                            Intent intent = new Intent(MainActivity.this, AuthActivity.class);
+                            startActivity(intent);
+                        }
+                    }, 1100);
+
         }
 
     }
