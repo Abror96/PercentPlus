@@ -4,22 +4,25 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kringle.percentplus.activities.ObjectsActivity;
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.model.Category;
+import com.example.kringle.percentplus.retrofit.models.CategoriesResponse;
 
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
-    private List<Category> categoryList;
+    private List<CategoriesResponse.ActivityType> categoryList;
 
-    public CategoryAdapter(List<Category> categoryList) {
+    public CategoryAdapter(List<CategoriesResponse.ActivityType> categoryList) {
         this.categoryList = categoryList;
     }
 
@@ -34,15 +37,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        final Category category = categoryList.get(position);
-        holder.categoryName.setText(category.getCategoryName());
-        holder.number.setText(String.valueOf(category.getNum()));
+
+        Log.d("LOGGER Adapter", "onBindViewHolder: " + categoryList.toString());
+
+        final CategoriesResponse.ActivityType category = categoryList.get(position);
+        holder.categoryName.setText(category.getName());
+        holder.number.setText(String.valueOf(category.getId()));
 
         holder.categoryItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), ObjectsActivity.class);
-                intent.putExtra("category_name", category.getCategoryName());
+                intent.putExtra("category_name", category.getName());
                 view.getContext().startActivity(intent);
             }
         });

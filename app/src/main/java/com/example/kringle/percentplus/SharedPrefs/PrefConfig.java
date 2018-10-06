@@ -1,0 +1,57 @@
+package com.example.kringle.percentplus.SharedPrefs;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.widget.Toast;
+
+import com.example.kringle.percentplus.R;
+
+public class PrefConfig {
+
+    private SharedPreferences sharedPreferences;
+    private Context context;
+
+    public PrefConfig(Context context) {
+        this.context = context;
+        sharedPreferences = context.getSharedPreferences(
+                "AccountData", Context.MODE_PRIVATE);
+    }
+
+    public void writeLoginStatus(boolean status) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(context.getString(R.string.pref_login_status), status);
+        editor.commit();
+    }
+
+    public boolean readLoginStatus() {
+        return sharedPreferences.getBoolean(context.getString(R.string.pref_login_status), false);
+    }
+
+    public void writeEmail(String name) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.pref_username), name);
+        editor.commit();
+    }
+
+    public void writeToken(String token) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.pref_token), token);
+        editor.commit();
+    }
+
+    public void writePassword(String password) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.pref_password), password);
+        editor.commit();
+    }
+
+    public String readToken() {
+        return sharedPreferences.getString(context.getString(R.string.pref_token), "");
+    }
+
+    public void displayToast(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+
+}

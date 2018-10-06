@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PercentPlus</string>
+    <string name="pref_login_status">com.example.preference_login_status</string>
+    <string name="pref_username">com.example.preference_username</string>
+    <string name="pref_token">com.example.preference_token</string>
+    <string name="pref_password">com.example.preference_password</string>
 </resources>

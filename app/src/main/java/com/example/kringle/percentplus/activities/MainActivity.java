@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.kringle.percentplus.R;
+import com.example.kringle.percentplus.SharedPrefs.PrefConfig;
 import com.example.kringle.percentplus.adapter.CustomPagerAdapter;
 import com.example.kringle.percentplus.fragments.BonusFragment;
 import com.example.kringle.percentplus.fragments.CategoryFragment;
@@ -34,11 +35,25 @@ public class MainActivity extends FragmentActivity {
     private String objectName;
     private Bundle objectNameBundle;
 
+    public static PrefConfig prefConfig;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        prefConfig = new PrefConfig(this);
+        if (savedInstanceState != null) {
+            return;
+        }
+
+        // if user isn't logged in
+        if (!prefConfig.readLoginStatus()) {
+            Intent auth_intent = new Intent(MainActivity.this, AuthActivity.class);
+            startActivity(auth_intent);
+            finish();
+        }
 
         if (getIntent().getIntExtra("tab_id", -1) != -1) {
             tabPosition = getIntent().getExtras().getInt("tab_id");
@@ -53,15 +68,6 @@ public class MainActivity extends FragmentActivity {
             initViewPager();
         } else {
             preloader();
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-
-                            Intent intent = new Intent(MainActivity.this, AuthActivity.class);
-                            startActivity(intent);
-                        }
-                    }, 1100);
-
         }
 
     }

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kringle.percentplus.R;
+import com.example.kringle.percentplus.retrofit.models.AuthResponse;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,12 +54,11 @@ public class ConfirmEmailActivity extends AppCompatActivity implements View.OnCl
 
                 break;
             case R.id.next_confirm:
-                Intent intent = new Intent(ConfirmEmailActivity.this, MainActivity.class);
-                intent.putExtra("tab_id", 0);
+                Intent intent = new Intent(ConfirmEmailActivity.this, AuthActivity.class);
                 startActivity(intent);
                 break;
             case R.id.auth_btn_confirm:
-                Intent intent1 = new Intent(ConfirmEmailActivity.this, AuthActivity.class);
+                Intent intent1 = new Intent(ConfirmEmailActivity.this, RegisterActivity.class);
                 startActivity(intent1);
                 break;
         }
