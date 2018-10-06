@@ -34,14 +34,14 @@
 
     <TextView
         android:id="@+id/tv_object_category_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:fontFamily="@font/new_font"
-        android:text="ШИНОМОНТАЖИ"
+        android:text="Шиномонтажи"
+        android:textAlignment="center"
         android:textColor="#fff"
-        android:textAllCaps="true"
-        android:textSize="22sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

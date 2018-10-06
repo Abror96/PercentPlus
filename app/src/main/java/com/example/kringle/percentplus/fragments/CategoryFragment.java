@@ -1,6 +1,5 @@
 package com.example.kringle.percentplus.fragments;
 
-import android.app.Activity;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,12 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.activities.MainActivity;
 import com.example.kringle.percentplus.adapter.CategoryAdapter;
-import com.example.kringle.percentplus.model.Category;
 import com.example.kringle.percentplus.retrofit.RetrofitClient;
 import com.example.kringle.percentplus.retrofit.interfaces.ICategories;
 import com.example.kringle.percentplus.retrofit.models.CategoriesResponse;
@@ -79,7 +76,6 @@ public class CategoryFragment extends Fragment {
                     if (categoriesList.size() > 0) categoriesList.clear();
 
                     categoriesList.addAll(response.body().getActivityTypes());
-                    Log.d("LOGGER Categories", "onResponse: " + categoriesList.toString());
                     setUpRecyclerView();
                 }
             }

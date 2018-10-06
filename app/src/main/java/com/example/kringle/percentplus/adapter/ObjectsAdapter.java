@@ -11,16 +11,16 @@ import android.widget.TextView;
 
 import com.example.kringle.percentplus.activities.MainActivity;
 import com.example.kringle.percentplus.R;
-import com.example.kringle.percentplus.model.Object;
+import com.example.kringle.percentplus.retrofit.models.Objects;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ObjectsAdapter extends RecyclerView.Adapter<ObjectsAdapter.ViewHolder>{
 
-    private List<Object> objectList = new ArrayList<>();
+    private List<Objects.Object> objectList = new ArrayList<>();
 
-    public ObjectsAdapter(List<Object> objectList) {
+    public ObjectsAdapter(List<Objects.Object> objectList) {
         this.objectList = objectList;
     }
 
@@ -35,15 +35,15 @@ public class ObjectsAdapter extends RecyclerView.Adapter<ObjectsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Object object = objectList.get(position);
-        holder.objectName.setText(object.getObjectName());
+        final Objects.Object object = objectList.get(position);
+        holder.objectName.setText(object.getName());
 
         holder.objectsItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 intent.putExtra("tab_id", 2);
-                intent.putExtra("object_name", object.getObjectName());
+                intent.putExtra("object_name", object.getName());
                 view.getContext().startActivity(intent);
             }
         });
