@@ -52,7 +52,6 @@ public class ObjectsActivity extends AppCompatActivity implements View.OnClickLi
         ButterKnife.bind(this);
 
         // init api
-
         retrofit = RetrofitClient.getInstance();
 
         // init recycler
@@ -84,7 +83,7 @@ public class ObjectsActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(Call<Objects> call, Response<Objects> response) {
                 int statusCode = response.code();
-                Log.d("LOGGER Auth", "statusCode: " + statusCode);
+                Log.d("LOGGER Objects", "statusCode: " + statusCode);
                 if (statusCode == 200) {
                     if (objectsList.size() > 0) objectsList.clear();
 

@@ -49,6 +49,16 @@ public class PrefConfig {
         return sharedPreferences.getString(context.getString(R.string.pref_token), "");
     }
 
+    public String readEmail() {
+        return sharedPreferences.getString(context.getString(R.string.pref_username), "");
+    }
+
+    public String readPassword() {
+        return sharedPreferences.getString(context.getString(R.string.pref_password), "");
+    }
+
+
+
     public void displayToast(String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }

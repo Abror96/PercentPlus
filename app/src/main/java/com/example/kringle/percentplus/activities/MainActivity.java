@@ -58,9 +58,12 @@ public class MainActivity extends FragmentActivity {
         if (getIntent().getIntExtra("tab_id", -1) != -1) {
             tabPosition = getIntent().getExtras().getInt("tab_id");
             objectName = getIntent().getStringExtra("object_name");
+            int object_id = getIntent().getExtras().getInt("object_id");
+
 
             objectNameBundle = new Bundle();
             objectNameBundle.putString("object_name", objectName);
+            objectNameBundle.putInt("object_id", object_id);
 
             preloader_view.setVisibility(View.GONE);
             tabLayout.setVisibility(View.VISIBLE);

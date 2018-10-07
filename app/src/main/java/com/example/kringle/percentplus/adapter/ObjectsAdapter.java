@@ -44,6 +44,7 @@ public class ObjectsAdapter extends RecyclerView.Adapter<ObjectsAdapter.ViewHold
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 intent.putExtra("tab_id", 2);
                 intent.putExtra("object_name", object.getName());
+                intent.putExtra("object_id", object.getId());
                 view.getContext().startActivity(intent);
             }
         });

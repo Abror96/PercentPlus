@@ -1,5 +1,6 @@
 package com.example.kringle.percentplus.fragments;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,11 +16,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.kringle.percentplus.R;
+import com.example.kringle.percentplus.activities.AuthActivity;
 import com.example.kringle.percentplus.activities.MainActivity;
 import com.example.kringle.percentplus.adapter.CategoryAdapter;
 import com.example.kringle.percentplus.retrofit.RetrofitClient;
+import com.example.kringle.percentplus.retrofit.interfaces.IAuthorization;
 import com.example.kringle.percentplus.retrofit.interfaces.ICategories;
+import com.example.kringle.percentplus.retrofit.models.AuthResponse;
 import com.example.kringle.percentplus.retrofit.models.CategoriesResponse;
+import com.example.kringle.percentplus.retrofit.models.MobileUser;
+import com.example.kringle.percentplus.retrofit.models.SignRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +43,7 @@ public class CategoryFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
 
     private ICategories iCategories;
+    private IAuthorization iAuthorization;
     private Retrofit retrofit;
 
     private List<CategoriesResponse.ActivityType> categoriesList = new ArrayList<>();
@@ -71,12 +78,15 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onResponse(Call<CategoriesResponse> call, Response<CategoriesResponse> response) {
                 int statusCode = response.code();
-                Log.d("LOGGER Auth", "statusCode: " + statusCode);
+                Log.d("LOGGER Category", "statusCode: " + statusCode);
                 if (statusCode == 200) {
                     if (categoriesList.size() > 0) categoriesList.clear();
 
                     categoriesList.addAll(response.body().getActivityTypes());
                     setUpRecyclerView();
+                } else if (statusCode == 401) {
+                    Log.d("LOGGER Category", "request new token");
+                    getNewToken();
                 }
             }
 
@@ -86,6 +96,33 @@ public class CategoryFragment extends Fragment {
             }
         });
 
+    }
+
+    private void getNewToken() {
+        iAuthorization = retrofit.create(IAuthorization.class);
+        Call<AuthResponse> authResponseCall = iAuthorization.getAccountData(
+                new SignRequest(
+                        new MobileUser(MainActivity.prefConfig.readEmail(),
+                                MainActivity.prefConfig.readPassword()))
+        );
+
+        authResponseCall.enqueue(new Callback<AuthResponse>() {
+            @Override
+            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                int statusCode = response.code();
+                Log.d("LOGGER CategoryToken", "statusCode: " + statusCode);
+                if (statusCode == 200) {
+                    String new_token = response.headers().get("Authorization");
+                    MainActivity.prefConfig.writeToken(new_token);
+                    getCategories();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AuthResponse> call, Throwable t) {
+                MainActivity.prefConfig.displayToast("Произошла ошибка при попытке авторизации, попытайтесь снова.");
+            }
+        });
     }
 
     private void setUpRecyclerView() {
