@@ -11,15 +11,15 @@ public class SearchRequest {
     @Expose
     private List<SearchParam> searchParams = null;
 
+    public SearchRequest(List<SearchParam> searchParams) {
+        this.searchParams = searchParams;
+    }
+
     public List<SearchParam> getSearchParams() {
         return searchParams;
     }
 
-    public void setSearchParams(List<SearchParam> searchParams) {
-        this.searchParams = searchParams;
-    }
-
-    public class SearchParam {
+    public static class SearchParam {
 
         @SerializedName("param")
         @Expose
@@ -27,6 +27,11 @@ public class SearchRequest {
         @SerializedName("value")
         @Expose
         private String value;
+
+        public SearchParam(String param, String value) {
+            this.param = param;
+            this.value = value;
+        }
 
         public String getParam() {
             return param;

@@ -1,6 +1,5 @@
 package com.example.kringle.percentplus.activities;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -13,10 +12,12 @@ import android.widget.TextView;
 
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.adapter.ObjectsAdapter;
+import com.example.kringle.percentplus.adapter.SearchAdapter;
 import com.example.kringle.percentplus.retrofit.RetrofitClient;
 import com.example.kringle.percentplus.retrofit.interfaces.IObjects;
 import com.example.kringle.percentplus.retrofit.models.Objects;
 import com.example.kringle.percentplus.retrofit.models.ObjectsRequest;
+import com.example.kringle.percentplus.retrofit.models.PointOfSale;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +43,11 @@ public class ObjectsActivity extends AppCompatActivity implements View.OnClickLi
     private RecyclerView categoryRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private List<Objects.Object> objectsList = new ArrayList<>();
+    private List<PointOfSale> searchResultList = new ArrayList<>();
 
     private Integer category_id;
+
+    private DividerItemDecoration itemDecorator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,19 +60,36 @@ public class ObjectsActivity extends AppCompatActivity implements View.OnClickLi
 
         // init recycler
         categoryRecyclerView = findViewById(R.id.objectsRecyclerView);
+        categoryRecyclerView.setHasFixedSize(true);
+        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(this.getResources().getDrawable(R.drawable.divider));
+        categoryRecyclerView.addItemDecoration(itemDecorator);
 
         if (getIntent().getExtras() != null) {
-            String category_name_str = getIntent().getExtras().getString("category_name");
-            category_id = getIntent().getExtras().getInt("category_id");
-            tv_category_name.setText(category_name_str);
-        }
+            // if activity is opened from search
+            if (getIntent().getBundleExtra("searchList") != null) {
+                Bundle bundle = getIntent().getBundleExtra("searchList");
+                String search_by = getIntent().getStringExtra("search_by");
+                tv_category_name.setText("Поиск по " + search_by);
+                List<PointOfSale> searchList =
+                        (ArrayList<PointOfSale>) bundle.getSerializable("search_result");
 
+                searchResultList.addAll(searchList);
+                setAdapterSearch();
+            } else {
+                // if activity is opened from categories
+                String category_name_str = getIntent().getExtras().getString("category_name");
+                category_id = getIntent().getExtras().getInt("category_id");
+                tv_category_name.setText(category_name_str);
+
+                getObjects();
+                setAdapterObjects();
+            }
+        }
 
         object_back_btn.setOnClickListener(this);
 
-        getObjects();
-
-        setUpRecyclerView();
     }
 
     private void getObjects() {
@@ -88,7 +109,7 @@ public class ObjectsActivity extends AppCompatActivity implements View.OnClickLi
                     if (objectsList.size() > 0) objectsList.clear();
 
                     objectsList.addAll(response.body().getActivityType().getPartners());
-                    setUpRecyclerView();
+                    setAdapterObjects();
                 }
             }
 
@@ -99,14 +120,13 @@ public class ObjectsActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
-    private void setUpRecyclerView() {
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        itemDecorator.setDrawable(this.getResources().getDrawable(R.drawable.divider));
+    private void setAdapterSearch() {
+        mAdapter = new SearchAdapter(searchResultList);
+        categoryRecyclerView.setAdapter(mAdapter);
+    }
 
-        categoryRecyclerView.setHasFixedSize(true);
-        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    private void setAdapterObjects() {
         mAdapter = new ObjectsAdapter(objectsList);
-        categoryRecyclerView.addItemDecoration(itemDecorator);
         categoryRecyclerView.setAdapter(mAdapter);
     }
 

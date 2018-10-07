@@ -19,8 +19,8 @@ public class SearchPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0: return new ByAddressFragment();
-            case 1: return new ByCodeFragment();
-            case 2: return new ByNameFragment();
+            case 1: return new ByNameFragment();
+            case 2: return new ByCodeFragment();
         }
         return null;
     }
