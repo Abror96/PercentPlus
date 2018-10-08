@@ -119,10 +119,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     Intent intent = new Intent(RegisterActivity.this, ConfirmEmailActivity.class);
                     startActivity(intent);
                     finish();
-                } else if (statusCode == 401) {
-                    MainActivity.prefConfig.displayToast("Email или пароль были введены неверно!");
                 } else {
-                    MainActivity.prefConfig.displayToast("Произошла ошибка при попытке авторизации, попытайтесь снова.");
+                    MainActivity.prefConfig.displayToast("Произошла ошибка при попытке регистрации, попытайтесь снова.");
                 }
             }
 
