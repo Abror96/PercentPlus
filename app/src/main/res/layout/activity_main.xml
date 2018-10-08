@@ -12,6 +12,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/main_logo"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginBottom="8dp"

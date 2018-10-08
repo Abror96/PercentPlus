@@ -87,7 +87,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/animating_circle"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="8dp"
@@ -109,7 +109,7 @@
             android:gravity="end|center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
+            app:layout_constraintTop_toBottomOf="@+id/animating_circle">
 
             <TextView
                 android:id="@+id/icon_info"
@@ -137,6 +137,7 @@
             app:layout_constraintTop_toBottomOf="@+id/info_layout">
 
             <TextView
+                android:id="@+id/current_user_bonus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

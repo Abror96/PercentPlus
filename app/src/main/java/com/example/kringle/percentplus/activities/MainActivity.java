@@ -9,7 +9,15 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.kringle.percentplus.R;
@@ -18,6 +26,9 @@ import com.example.kringle.percentplus.adapter.CustomPagerAdapter;
 import com.example.kringle.percentplus.fragments.BonusFragment;
 import com.example.kringle.percentplus.fragments.CategoryFragment;
 import com.example.kringle.percentplus.fragments.SearchFragment;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +41,8 @@ public class MainActivity extends FragmentActivity {
     TabLayout tabLayout;
     @BindView(R.id.preloader)
     ConstraintLayout preloader_view;
+    @BindView(R.id.main_logo)
+    ImageView main_logo;
     private PagerAdapter pagerAdapter;
     private int tabPosition = 0;
     private String objectName;
@@ -55,6 +68,15 @@ public class MainActivity extends FragmentActivity {
             finish();
         }
 
+        // animating logo
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                animateLogo();
+            }
+        }, 0, 1000);
+
         if (getIntent().getIntExtra("tab_id", -1) != -1) {
             tabPosition = getIntent().getExtras().getInt("tab_id");
             objectName = getIntent().getStringExtra("object_name");
@@ -73,6 +95,26 @@ public class MainActivity extends FragmentActivity {
             preloader();
         }
 
+    }
+
+    private void animateLogo() {
+        final Animation anim_out = AnimationUtils.loadAnimation(this, R.anim.zoom_out);
+        final Animation anim_in  = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
+        anim_out.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override public void onAnimationStart(Animation animation) {}
+            @Override public void onAnimationRepeat(Animation animation) {}
+            @Override public void onAnimationEnd(Animation animation)
+            {
+                anim_in.setAnimationListener(new Animation.AnimationListener() {
+                    @Override public void onAnimationStart(Animation animation) {}
+                    @Override public void onAnimationRepeat(Animation animation) {}
+                    @Override public void onAnimationEnd(Animation animation) {}
+                });
+                main_logo.startAnimation(anim_in);
+            }
+        });
+        main_logo.startAnimation(anim_out);
     }
 
     private void initViewPager() {
@@ -105,7 +147,7 @@ public class MainActivity extends FragmentActivity {
                         tabLayout.setVisibility(View.VISIBLE);
                         initViewPager();
                     }
-                }, 1500);
+                }, 3000);
 
     }
 }

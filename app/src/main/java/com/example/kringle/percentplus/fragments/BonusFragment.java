@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,8 +52,6 @@ public class BonusFragment extends Fragment implements View.OnClickListener {
     private IBonus iBonus;
     private Retrofit retrofit;
 
-
-
     private SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
     private SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy.MM.dd");
     private SimpleDateFormat dateFormat3 = new SimpleDateFormat("dd MMMM");
@@ -73,8 +74,6 @@ public class BonusFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        Toast.makeText(getContext(), "ADSD", Toast.LENGTH_SHORT).show();
-
         // init api
         retrofit = RetrofitClient.getInstance();
 
@@ -85,6 +84,9 @@ public class BonusFragment extends Fragment implements View.OnClickListener {
         final TextView cur_time = view.findViewById(R.id.currentTime);
         cur_date.setText(String.valueOf(dateFormat3.format(new Date())));
         cur_time.setText(String.valueOf(dateFormat.format(new Date())));
+
+        // animate circle
+        animateCircle(view);
 
         TextView tv_object_name = view.findViewById(R.id.bonus_object_name);
         tv_object_name.setText(object_name);
@@ -99,6 +101,20 @@ public class BonusFragment extends Fragment implements View.OnClickListener {
         getBonus(view);
 
         return view;
+    }
+
+    private void animateCircle(View view) {
+        ImageView animating_circle = view.findViewById(R.id.animating_circle);
+        Animation mAnimation = new TranslateAnimation(
+                TranslateAnimation.ABSOLUTE, 0f,
+                TranslateAnimation.ABSOLUTE, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0.02f);
+        mAnimation.setDuration(400);
+        mAnimation.setRepeatCount(7);
+        mAnimation.setRepeatMode(Animation.REVERSE);
+        mAnimation.setInterpolator(new LinearInterpolator());
+        animating_circle.setAnimation(mAnimation);
     }
 
     private void getBonus(final View view) {
@@ -117,7 +133,19 @@ public class BonusFragment extends Fragment implements View.OnClickListener {
                 Log.d("LOGGER Bonus", "statusCode: " + statusCode);
                 if (statusCode == 200) {
                     TextView tv_bonus_text = view.findViewById(R.id.tv_bonus_text);
+                    TextView current_user_bonus = view.findViewById(R.id.current_user_bonus);
+
                     String percent_full_num = response.body().getBonus().getPercent();
+                    switch (percent_full_num) {
+                        case "5.0": current_user_bonus.setText("0%");
+                            break;
+                        case "7.0": current_user_bonus.setText("5%");
+                            break;
+                        case "10.0": current_user_bonus.setText("7%");
+                            break;
+                        case "15.0": current_user_bonus.setText("10%");
+                            break;
+                    }
                     String percent = percent_full_num
                             .substring(0, percent_full_num.length()-2);
                     tv_bonus_text.setText(
