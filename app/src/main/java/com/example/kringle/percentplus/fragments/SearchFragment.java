@@ -1,6 +1,5 @@
 package com.example.kringle.percentplus.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

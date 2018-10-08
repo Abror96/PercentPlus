@@ -1,7 +1,5 @@
 package com.example.kringle.percentplus.retrofit.interfaces;
 
-import com.example.kringle.percentplus.retrofit.models.Bonus;
-import com.example.kringle.percentplus.retrofit.models.BonusRequest;
 import com.example.kringle.percentplus.retrofit.models.SearchRequest;
 import com.example.kringle.percentplus.retrofit.models.SearchResponse;
 

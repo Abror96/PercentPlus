@@ -3,12 +3,10 @@ package com.example.kringle.percentplus.fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,28 +14,19 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.activities.LegendActivity;
 import com.example.kringle.percentplus.activities.MainActivity;
 import com.example.kringle.percentplus.retrofit.RetrofitClient;
 import com.example.kringle.percentplus.retrofit.interfaces.IBonus;
-import com.example.kringle.percentplus.retrofit.interfaces.IObjects;
 import com.example.kringle.percentplus.retrofit.models.Bonus;
 import com.example.kringle.percentplus.retrofit.models.BonusRequest;
 
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Handler;
 
 import retrofit2.Call;
 import retrofit2.Callback;

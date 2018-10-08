@@ -1,6 +1,5 @@
 package com.example.kringle.percentplus.fragments;
 
-import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.kringle.percentplus.R;
-import com.example.kringle.percentplus.activities.AuthActivity;
 import com.example.kringle.percentplus.activities.MainActivity;
 import com.example.kringle.percentplus.adapter.CategoryAdapter;
 import com.example.kringle.percentplus.retrofit.RetrofitClient;

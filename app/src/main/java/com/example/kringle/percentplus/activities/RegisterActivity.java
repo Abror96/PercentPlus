@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.retrofit.RetrofitClient;
-import com.example.kringle.percentplus.retrofit.interfaces.IAuthorization;
 import com.example.kringle.percentplus.retrofit.interfaces.IRegistration;
 import com.example.kringle.percentplus.retrofit.models.MobileUser;
 import com.example.kringle.percentplus.retrofit.models.RegistrationResponse;

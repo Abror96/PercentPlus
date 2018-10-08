@@ -2,7 +2,6 @@ package com.example.kringle.percentplus.fragments.searchFragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,6 @@ import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.activities.MainActivity;
 import com.example.kringle.percentplus.activities.ObjectsActivity;
 import com.example.kringle.percentplus.retrofit.RetrofitClient;
-import com.example.kringle.percentplus.retrofit.interfaces.IBonus;
 import com.example.kringle.percentplus.retrofit.interfaces.ISearch;
 import com.example.kringle.percentplus.retrofit.models.PointOfSale;
 import com.example.kringle.percentplus.retrofit.models.SearchRequest;

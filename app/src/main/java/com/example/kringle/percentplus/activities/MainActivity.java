@@ -7,25 +7,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.SharedPrefs.PrefConfig;
 import com.example.kringle.percentplus.adapter.CustomPagerAdapter;
-import com.example.kringle.percentplus.fragments.BonusFragment;
-import com.example.kringle.percentplus.fragments.CategoryFragment;
-import com.example.kringle.percentplus.fragments.SearchFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;

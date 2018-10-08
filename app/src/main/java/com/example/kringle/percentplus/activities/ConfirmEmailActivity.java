@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kringle.percentplus.R;
-import com.example.kringle.percentplus.retrofit.models.AuthResponse;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
