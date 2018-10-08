@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.activities.LegendActivity;
@@ -31,6 +32,9 @@ import org.w3c.dom.Text;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,10 +44,16 @@ import retrofit2.Retrofit;
 public class BonusFragment extends Fragment implements View.OnClickListener {
 
     private String object_name = "";
-    private int object_id;
+    private int object_id = -1;
 
     private IBonus iBonus;
     private Retrofit retrofit;
+
+
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
+    private SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy.MM.dd");
+    private SimpleDateFormat dateFormat3 = new SimpleDateFormat("dd MMMM");
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +63,9 @@ public class BonusFragment extends Fragment implements View.OnClickListener {
             object_name = args.getString("object_name");
             object_id = args.getInt("object_id");
         }
+        if (object_id == -1) {
+            object_id = MainActivity.prefConfig.readId();
+        }
 
     }
 
@@ -60,10 +73,18 @@ public class BonusFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        Toast.makeText(getContext(), "ADSD", Toast.LENGTH_SHORT).show();
+
         // init api
         retrofit = RetrofitClient.getInstance();
 
-        View view = inflater.inflate(R.layout.fragment_bonus, null);
+        final View view = inflater.inflate(R.layout.fragment_bonus, null);
+
+        //setting time
+        final TextView cur_date = view.findViewById(R.id.currentDate);
+        final TextView cur_time = view.findViewById(R.id.currentTime);
+        cur_date.setText(String.valueOf(dateFormat3.format(new Date())));
+        cur_time.setText(String.valueOf(dateFormat.format(new Date())));
 
         TextView tv_object_name = view.findViewById(R.id.bonus_object_name);
         tv_object_name.setText(object_name);
@@ -133,7 +154,6 @@ public class BonusFragment extends Fragment implements View.OnClickListener {
     }
 
     private String getDate() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
-        return String.valueOf(dateFormat.format(new Date()));
+        return String.valueOf(dateFormat2.format(new Date()));
     }
 }

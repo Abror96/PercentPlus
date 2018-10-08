@@ -108,6 +108,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                     MainActivity.prefConfig.writeEmail(email);
                     MainActivity.prefConfig.writePassword(password);
                     MainActivity.prefConfig.writeToken(token);
+                    MainActivity.prefConfig.writeId(response.body().getId());
                     Intent intent = new Intent(AuthActivity.this, MainActivity.class);
                     intent.putExtra("tab_id", 0);
                     startActivity(intent);

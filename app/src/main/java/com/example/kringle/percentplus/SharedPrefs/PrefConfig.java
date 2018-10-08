@@ -33,6 +33,12 @@ public class PrefConfig {
         editor.commit();
     }
 
+    public void writeId(int id) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(context.getString(R.string.pref_id), id);
+        editor.commit();
+    }
+
     public void writeToken(String token) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(context.getString(R.string.pref_token), token);
@@ -47,6 +53,10 @@ public class PrefConfig {
 
     public String readToken() {
         return sharedPreferences.getString(context.getString(R.string.pref_token), "");
+    }
+
+    public int readId() {
+        return sharedPreferences.getInt(context.getString(R.string.pref_id), -1);
     }
 
     public String readEmail() {
