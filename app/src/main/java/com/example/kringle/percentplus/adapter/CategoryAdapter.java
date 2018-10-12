@@ -38,7 +38,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
 
         final CategoriesResponse.ActivityType category = categoryList.get(position);
-        holder.number.setText(String.valueOf(category.getId()));
+        //holder.number.setText(String.valueOf(category.getId()));
         try {
             holder.categoryName.setText(category.getName().substring(0, 26
             ) + "...");
@@ -65,13 +65,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView categoryName;
-        TextView number;
+        //TextView number;
         ConstraintLayout categoryItemLayout;
 
        public ViewHolder(@NonNull View itemView) {
            super(itemView);
            categoryName = itemView.findViewById(R.id.categoryName);
-           number = itemView.findViewById(R.id.categoryNum);
+           //number = itemView.findViewById(R.id.categoryNum);
            categoryItemLayout = itemView.findViewById(R.id.categoryItemLayout);
        }
     }
