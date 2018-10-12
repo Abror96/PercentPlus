@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.kringle.percentplus.ProgressDialog.DialogConfig;
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.retrofit.interfaces.IAuthorization;
 import com.example.kringle.percentplus.retrofit.RetrofitClient;
@@ -36,6 +37,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     Button btn_sign_in_auth;
     @BindView(R.id.register_btn_auth)
     TextView register_btn_auth;
+    private DialogConfig progressDialog;
 
     private IAuthorization iAuthorization;
     private Retrofit retrofit;
@@ -52,6 +54,9 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         // init api
         retrofit = RetrofitClient.getInstance();
 
+        // init dialog
+        progressDialog = new DialogConfig(this, "Идет загрузка");
+
         // underlining the textviews
         tv_forgot_password.setPaintFlags(tv_forgot_password.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         register_btn_auth.setPaintFlags(register_btn_auth.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -66,7 +71,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        Intent intent = null;
+        Intent intent;
         switch (view.getId()) {
             case R.id.forgot_password:
                 intent = new Intent(AuthActivity.this, RestorePasswordActivity.class);
@@ -77,6 +82,10 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                 password = et_password_auth.getText().toString().trim();
                 if (!email.isEmpty() && !password.isEmpty()) {
                     getAuthResponse();
+
+                    // show dialog
+                    progressDialog.showDialog();
+
                 } else MainActivity.prefConfig.displayToast("Заполните все поля!");
 
                 break;
@@ -103,6 +112,10 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                 int statusCode = response.code();
                 Log.d("LOGGER Auth", "statusCode: " + statusCode);
                 if (statusCode == 200) {
+
+                    // hide dialog
+                    progressDialog.dismissDialog();
+
                     String token = response.headers().get("Authorization");
                     MainActivity.prefConfig.writeLoginStatus(true);
                     MainActivity.prefConfig.writeEmail(email);
@@ -113,15 +126,17 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                     intent.putExtra("tab_id", 0);
                     startActivity(intent);
                     finish();
-                } else if (statusCode == 401) {
-                    MainActivity.prefConfig.displayToast("Email или пароль были введены неверно!");
                 } else {
-                    MainActivity.prefConfig.displayToast("Произошла ошибка при попытке авторизации, попытайтесь снова.");
+                    // hide dialog
+                    progressDialog.dismissDialog();
+                    MainActivity.prefConfig.displayToast("Email или пароль были введены неверно!");
                 }
             }
 
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable t) {
+                // hide dialog
+                progressDialog.dismissDialog();
                 MainActivity.prefConfig.displayToast("Произошла ошибка при попытке авторизации, попытайтесь снова.");
             }
         });

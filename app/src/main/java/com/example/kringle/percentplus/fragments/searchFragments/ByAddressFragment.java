@@ -1,5 +1,7 @@
 package com.example.kringle.percentplus.fragments.searchFragments;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
+import com.example.kringle.percentplus.ProgressDialog.DialogConfig;
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.activities.MainActivity;
 import com.example.kringle.percentplus.activities.ObjectsActivity;
@@ -58,6 +62,7 @@ public class ByAddressFragment extends Fragment {
             public void onClick(View view) {
                 city_search = et_city_search.getText().toString().trim().toLowerCase();
                 address_search = et_address_search.getText().toString().trim().toLowerCase();
+
                 if (city_search.isEmpty() && address_search.isEmpty()) {
                     MainActivity.prefConfig.displayToast("Заполните одно поле");
                 } else if (!city_search.isEmpty() && !address_search.isEmpty()) {
@@ -65,9 +70,13 @@ public class ByAddressFragment extends Fragment {
                 } else if (city_search.isEmpty()) {
                     getData(address_search, "address");
                     search_by = "адресу: ";
+                    // show dialog
+                    MainActivity.dialogConfig.showDialog();
                 } else {
                     getData(city_search, "city");
                     search_by = "городу: ";
+                    // show dialog
+                    MainActivity.dialogConfig.showDialog();
                 }
             }
         });
@@ -96,6 +105,10 @@ public class ByAddressFragment extends Fragment {
                 searchList.addAll(response.body().getPointOfSales());
 
                 if (statusCode == 200) {
+
+                    // hide dialog
+                    MainActivity.dialogConfig.dismissDialog();
+
                     Intent objectsIntent = new Intent(getContext(), ObjectsActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("search_result",(Serializable) searchList);
@@ -107,9 +120,10 @@ public class ByAddressFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SearchResponse> call, Throwable t) {
+                // hide dialog
+                MainActivity.dialogConfig.dismissDialog();
                 MainActivity.prefConfig.displayToast("Ошибка при воспроизведении поиска");
             }
         });
     }
-
 }

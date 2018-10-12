@@ -53,7 +53,7 @@
             android:textAllCaps="false"
             android:fontFamily="@font/new_font"
             android:background="@drawable/btn_circle"
-            android:text="Отправить"
+            android:text="Найти"
             android:layout_marginTop="70dp"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"

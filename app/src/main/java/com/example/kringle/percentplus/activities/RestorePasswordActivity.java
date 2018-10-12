@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kringle.percentplus.ProgressDialog.DialogConfig;
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.retrofit.RetrofitClient;
 import com.example.kringle.percentplus.retrofit.interfaces.INewPassword;
@@ -38,6 +39,7 @@ public class RestorePasswordActivity extends AppCompatActivity implements View.O
 
     private Retrofit retrofit;
     private INewPassword iNewPassword;
+    private DialogConfig progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,9 @@ public class RestorePasswordActivity extends AppCompatActivity implements View.O
 
         // init api
         retrofit = RetrofitClient.getInstance();
+
+        // init dialog
+        progressDialog = new DialogConfig(this, "Идет загрузка");
 
         // underlining text views
         register_btn_restore.setPaintFlags(register_btn_restore.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -67,6 +72,10 @@ public class RestorePasswordActivity extends AppCompatActivity implements View.O
                 String restore_email = et_restore_email.getText().toString().trim();
                 if (!restore_email.isEmpty()) {
                     restorePassword(restore_email);
+
+                    // show dialog
+                    progressDialog.showDialog();
+
                 } else {
                     MainActivity.prefConfig.displayToast("Введите свой email");
                 }
@@ -91,20 +100,30 @@ public class RestorePasswordActivity extends AppCompatActivity implements View.O
                 int statusCode = response.code();
                 Log.d("LOGGER Reg", "statusCode: " + statusCode);
                 if (statusCode == 200) {
-                    MainActivity.prefConfig.displayToast("Для сброса пароля перейдите по ссылке, которая была отправлена на вашу почту");
+                    // hide dialog
+                    progressDialog.dismissDialog();
+                    MainActivity
+                            .prefConfig
+                            .displayToast("Для сброса пароля перейдите по ссылке, которая была отправлена на вашу почту");
                     Intent intent = new Intent(RestorePasswordActivity.this, AuthActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    MainActivity.prefConfig.displayToast("Произошла ошибка при попытке ре, попытайтесь снова.");
+                    // hide dialog
+                    progressDialog.dismissDialog();
+                    MainActivity
+                            .prefConfig
+                            .displayToast("Произошла ошибка при отправлении запроса. Попробуйте снова");
                 }
             }
 
             @Override
             public void onFailure(Call<NewPassword> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),
-                        "Произошла ошибка при отправлении запроса. Попробуйте снова",
-                        Toast.LENGTH_SHORT).show();
+                // hide dialog
+                progressDialog.dismissDialog();
+                MainActivity
+                        .prefConfig
+                        .displayToast("Произошла ошибка при отправлении запроса. Попробуйте снова");
             }
         });
     }

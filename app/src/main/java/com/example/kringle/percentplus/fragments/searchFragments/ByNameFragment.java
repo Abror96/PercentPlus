@@ -55,6 +55,8 @@ public class ByNameFragment extends Fragment {
                 object_name = et_object_name.getText().toString().trim().toLowerCase();
                 if (!et_object_name.getText().toString().equals("")) {
                     getData();
+                    // show dialog
+                    MainActivity.dialogConfig.showDialog();
                 } else
                     MainActivity.prefConfig.displayToast("Введите название для поиска");
             }
@@ -84,6 +86,8 @@ public class ByNameFragment extends Fragment {
                 searchList.addAll(response.body().getPointOfSales());
 
                 if (statusCode == 200) {
+                    // hide dialog
+                    MainActivity.dialogConfig.dismissDialog();
                     Intent objectsIntent = new Intent(getContext(), ObjectsActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("search_result",(Serializable) searchList);
@@ -97,6 +101,8 @@ public class ByNameFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SearchResponse> call, Throwable t) {
+                // hide dialog
+                MainActivity.dialogConfig.dismissDialog();
                 MainActivity.prefConfig.displayToast("Ошибка при воспроизведении поиска");
             }
         });

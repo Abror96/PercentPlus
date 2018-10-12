@@ -1,5 +1,6 @@
 package com.example.kringle.percentplus.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kringle.percentplus.ProgressDialog.DialogConfig;
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.retrofit.RetrofitClient;
 import com.example.kringle.percentplus.retrofit.interfaces.IRegistration;
@@ -51,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String confirm_password;
     private String name;
     private String city;
+    private DialogConfig progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         // init api
         retrofit = RetrofitClient.getInstance();
+
+        // init dialog
+        progressDialog = new DialogConfig(this, "Идет загрузка");
 
         // underlining text views
         auth_btn_register.setPaintFlags(auth_btn_register.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -84,6 +90,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if (password.length() >= 6) {
                         if (password.equals(confirm_password)) {
                             registerUser();
+
+                            // show dialog
+                            progressDialog.showDialog();
+
                         } else MainActivity.prefConfig.displayToast("Убедитесь в соответствии паролей.");
                     } else MainActivity.prefConfig.displayToast("Пароль не может быть меньше 6 символов.");
 
@@ -113,19 +123,24 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 int statusCode = response.code();
                 Log.d("LOGGER Reg", "statusCode: " + statusCode);
                 if (statusCode == 200) {
-                    MainActivity.prefConfig.writeLoginStatus(true);
+                    // hide dialog
+                    MainActivity.dialogConfig.dismissDialog();
                     MainActivity.prefConfig.writeEmail(email);
                     MainActivity.prefConfig.writePassword(password);
                     Intent intent = new Intent(RegisterActivity.this, ConfirmEmailActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
+                    // hide dialog
+                    progressDialog.dismissDialog();
                     MainActivity.prefConfig.displayToast("Произошла ошибка при попытке регистрации, попытайтесь снова.");
                 }
             }
 
             @Override
             public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+                // hide dialog
+                progressDialog.dismissDialog();
                 MainActivity.prefConfig.displayToast("Произошла ошибка при попытке регистрации, попытайтесь снова.");
             }
         });

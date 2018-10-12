@@ -55,6 +55,7 @@ public class ConfirmEmailActivity extends AppCompatActivity implements View.OnCl
             case R.id.next_confirm:
                 Intent intent = new Intent(ConfirmEmailActivity.this, AuthActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.auth_btn_confirm:
                 Intent intent1 = new Intent(ConfirmEmailActivity.this, RegisterActivity.class);

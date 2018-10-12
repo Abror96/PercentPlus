@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.example.kringle.percentplus.ProgressDialog.DialogConfig;
 import com.example.kringle.percentplus.R;
 import com.example.kringle.percentplus.SharedPrefs.PrefConfig;
 import com.example.kringle.percentplus.adapter.CustomPagerAdapter;
@@ -39,6 +40,7 @@ public class MainActivity extends FragmentActivity {
     private Bundle objectNameBundle;
 
     public static PrefConfig prefConfig;
+    public static DialogConfig dialogConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class MainActivity extends FragmentActivity {
         ButterKnife.bind(this);
 
         prefConfig = new PrefConfig(this);
+        dialogConfig = new DialogConfig(this, "Идет загрузка");
         if (savedInstanceState != null) {
             return;
         }
@@ -141,3 +144,5 @@ public class MainActivity extends FragmentActivity {
 
     }
 }
+
+

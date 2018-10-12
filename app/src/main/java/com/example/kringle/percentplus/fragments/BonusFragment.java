@@ -100,7 +100,7 @@ public class BonusFragment extends Fragment implements View.OnClickListener {
                 TranslateAnimation.RELATIVE_TO_PARENT, 0f,
                 TranslateAnimation.RELATIVE_TO_PARENT, 0.02f);
         mAnimation.setDuration(400);
-        mAnimation.setRepeatCount(7);
+        mAnimation.setRepeatCount(-1);
         mAnimation.setRepeatMode(Animation.REVERSE);
         mAnimation.setInterpolator(new LinearInterpolator());
         animating_circle.setAnimation(mAnimation);
