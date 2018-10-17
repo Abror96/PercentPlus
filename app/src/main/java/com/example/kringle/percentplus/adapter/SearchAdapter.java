@@ -53,17 +53,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             holder.objectName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
 
+        if (!isEmpty) {
+            holder.objectsItemLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), MainActivity.class);
+                    intent.putExtra("tab_id", 2);
+                    intent.putExtra("object_name", object.getName());
+                    intent.putExtra("object_id", object.getPartnerId());
+                    view.getContext().startActivity(intent);
+                }
+            });
+        }
 
-        holder.objectsItemLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
-                intent.putExtra("tab_id", 2);
-                intent.putExtra("object_name", object.getName());
-                intent.putExtra("object_id", object.getPartnerId());
-                view.getContext().startActivity(intent);
-            }
-        });
     }
 
     @Override

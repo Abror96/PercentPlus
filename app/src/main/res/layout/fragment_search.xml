@@ -11,7 +11,7 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="0dp"
-            android:layout_height="170dp"
+            android:layout_height="150dp"
             android:background="@color/colorPrimaryDark"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +23,16 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/bg1" />
+
+            <ImageView
+                android:id="@+id/logout"
+                android:src="@drawable/ic_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/textView3"

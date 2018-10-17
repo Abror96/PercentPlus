@@ -100,7 +100,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 } else MainActivity.prefConfig.displayToast("Заполните все поля!");
                 break;
             case R.id.auth_btn_register:
-                finish();
+                Intent intent = new Intent(RegisterActivity.this, AuthActivity.class);
+                startActivity(intent);
                 break;
             case R.id.register_back_btn:
                 onBackPressed();

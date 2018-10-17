@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -54,13 +55,6 @@ public class MainActivity extends FragmentActivity {
             return;
         }
 
-        // if user isn't logged in
-        if (!prefConfig.readLoginStatus()) {
-            Intent auth_intent = new Intent(MainActivity.this, AuthActivity.class);
-            startActivity(auth_intent);
-            finish();
-        }
-
         // animating logo
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -69,6 +63,20 @@ public class MainActivity extends FragmentActivity {
                 animateLogo();
             }
         }, 0, 1000);
+
+        // if user isn't logged in
+        if (!prefConfig.readLoginStatus()) {
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+
+                            Intent auth_intent = new Intent(MainActivity.this, AuthActivity.class);
+                            startActivity(auth_intent);
+                            finish();
+
+                        }
+                    }, 1800);
+        }
 
         if (getIntent().getIntExtra("tab_id", -1) != -1) {
             tabPosition = getIntent().getExtras().getInt("tab_id");
@@ -93,21 +101,26 @@ public class MainActivity extends FragmentActivity {
     private void animateLogo() {
         final Animation anim_out = AnimationUtils.loadAnimation(this, R.anim.zoom_out);
         final Animation anim_in  = AnimationUtils.loadAnimation(this, R.anim.zoom_in);
-        anim_out.setAnimationListener(new Animation.AnimationListener()
-        {
-            @Override public void onAnimationStart(Animation animation) {}
-            @Override public void onAnimationRepeat(Animation animation) {}
-            @Override public void onAnimationEnd(Animation animation)
+        try {
+            anim_out.setAnimationListener(new Animation.AnimationListener()
             {
-                anim_in.setAnimationListener(new Animation.AnimationListener() {
-                    @Override public void onAnimationStart(Animation animation) {}
-                    @Override public void onAnimationRepeat(Animation animation) {}
-                    @Override public void onAnimationEnd(Animation animation) {}
-                });
-                main_logo.startAnimation(anim_in);
-            }
-        });
-        main_logo.startAnimation(anim_out);
+                @Override public void onAnimationStart(Animation animation) {}
+                @Override public void onAnimationRepeat(Animation animation) {}
+                @Override public void onAnimationEnd(Animation animation)
+                {
+                    anim_in.setAnimationListener(new Animation.AnimationListener() {
+                        @Override public void onAnimationStart(Animation animation) {}
+                        @Override public void onAnimationRepeat(Animation animation) {}
+                        @Override public void onAnimationEnd(Animation animation) {}
+                    });
+                    main_logo.startAnimation(anim_in);
+
+                }
+            });
+            main_logo.startAnimation(anim_out);
+        } catch (Exception e) {
+            Log.d("LOGGER MainActivity", "animateLogo: " + e.getMessage());
+        }
     }
 
     private void initViewPager() {
