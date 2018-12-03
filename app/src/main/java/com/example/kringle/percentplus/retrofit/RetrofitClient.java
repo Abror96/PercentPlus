@@ -11,7 +11,7 @@ public class RetrofitClient {
         if (ourInstance == null) {
 
             ourInstance = new Retrofit.Builder()
-                    .baseUrl("http://rocky-reef-79826.herokuapp.com/api/")
+                    .baseUrl("http://procentplus.com/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
