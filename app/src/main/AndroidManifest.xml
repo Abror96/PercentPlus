@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kringle.percentplus">
+    package="com.procentplus">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.procentplus.activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,21 +20,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ObjectsActivity"
+            android:name="com.procentplus.activities.ObjectsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.LegendActivity"
+            android:name="com.procentplus.activities.LegendActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.AuthActivity"
+            android:name="com.procentplus.activities.AuthActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.RestorePasswordActivity"
+            android:name="com.procentplus.activities.RestorePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.RegisterActivity"
+            android:name="com.procentplus.activities.RegisterActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.ConfirmEmailActivity"
+        <activity android:name="com.procentplus.activities.ConfirmEmailActivity"
             android:screenOrientation="portrait"/>
     </application>
 
