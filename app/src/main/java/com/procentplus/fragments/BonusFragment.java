@@ -121,30 +121,34 @@ public class BonusFragment extends Fragment implements View.OnClickListener {
                 int statusCode = response.code();
                 Log.d("LOGGER Bonus", "statusCode: " + statusCode);
                 if (statusCode == 200) {
-                    TextView tv_bonus_text = view.findViewById(R.id.tv_bonus_text);
-                    TextView current_user_bonus = view.findViewById(R.id.current_user_bonus);
+                    try {
+                        TextView tv_bonus_text = view.findViewById(R.id.tv_bonus_text);
+                        TextView current_user_bonus = view.findViewById(R.id.current_user_bonus);
 
-                    String percent_full_num = response.body().getBonus().getPercent();
-                    switch (percent_full_num) {
-                        case "5.0": current_user_bonus.setText("0%");
-                            break;
-                        case "7.0": current_user_bonus.setText("5%");
-                            break;
-                        case "10.0": current_user_bonus.setText("7%");
-                            break;
-                        case "15.0": current_user_bonus.setText("10%");
-                            break;
+                        String percent_full_num = response.body().getBonus().getPercent();
+                        switch (percent_full_num) {
+                            case "5.0": current_user_bonus.setText("0%");
+                                break;
+                            case "7.0": current_user_bonus.setText("5%");
+                                break;
+                            case "10.0": current_user_bonus.setText("7%");
+                                break;
+                            case "15.0": current_user_bonus.setText("10%");
+                                break;
+                        }
+                        String percent = percent_full_num
+                                .substring(0, percent_full_num.length()-2);
+                        tv_bonus_text.setText(
+                                "До скидки " +
+                                percent+
+                                "% вам необходимо накопить еще " +
+                                (response.body().getBonus().getSumTo()-response.body().getBonus().getSumFrom()) +
+                                " руб. По данным на " +
+                                getDate()
+                        );
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    String percent = percent_full_num
-                            .substring(0, percent_full_num.length()-2);
-                    tv_bonus_text.setText(
-                            "До скидки " +
-                            percent+
-                            "% вам необходимо накопить еще " +
-                            (response.body().getBonus().getSumTo()-response.body().getBonus().getSumFrom()) +
-                            " руб. По данным на " +
-                            getDate()
-                    );
                 }
             }
 

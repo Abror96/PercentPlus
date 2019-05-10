@@ -15,7 +15,11 @@ public class DialogConfig {
     }
 
     public void showDialog() {
-        progressDialog.show();
+        try {
+            progressDialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void dismissDialog() {
