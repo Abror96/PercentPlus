@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.procentplus">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.hardware.camera" />
+    <uses-permission android:name="android.hardware.camera.autofocus" />
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.procentplus.activities.MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.procentplus.activities.ObjectsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.procentplus.activities.LegendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.procentplus.activities.AuthActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.procentplus.activities.RestorePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.procentplus.activities.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.procentplus.activities.ConfirmEmailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.procentplus.activities.PartnerActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.procentplus.activities.QrCodeScannerActivity"
+                  android:screenOrientation="portrait"
+            android:parentActivityName=".activities.PartnerActivity"/>
+    </application>
+
+</manifest>

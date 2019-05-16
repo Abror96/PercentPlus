@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/preloader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/main_logo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/logo_big"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mainViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@id/tabLayout"
+        android:layout_marginBottom="70dp">
+    </android.support.v4.view.ViewPager>
+
+    <android.support.design.widget.TabLayout
+        app:tabTextAppearance="@style/MineCustomTabText"
+        android:id="@+id/tabLayout"
+        android:background="#000"
+        app:tabTextColor="#fff"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:tabIndicatorColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </android.support.design.widget.TabLayout>
+
+</android.support.constraint.ConstraintLayout>

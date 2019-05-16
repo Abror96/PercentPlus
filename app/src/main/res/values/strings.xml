@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PercentPlus</string>
+    <string name="pref_login_status">com.example.preference_login_status</string>
+    <string name="pref_username">com.example.preference_username</string>
+    <string name="pref_token">com.example.preference_token</string>
+    <string name="pref_password">com.example.preference_password</string>
+    <string name="pref_isPartner">com.example.preference_isPartner</string>
+    <string name="pref_id">com.example.preference_id</string>
+    <string name="pref_partner_id">com.example.preference_partner_id</string>
+</resources>
